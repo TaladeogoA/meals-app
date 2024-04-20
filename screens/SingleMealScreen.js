@@ -1,11 +1,22 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Button,
+} from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
+import { useContext, useLayoutEffect } from "react";
+import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favourites";
 
-const SingleMealScreen = ({ route }) => {
+const SingleMealScreen = ({ route, navigation }) => {
+  const favoritesContext = useContext(FavoritesContext);
+
   const { mealId } = route.params;
   const meal = MEALS.find((meal) => meal.id === mealId);
-  console.log(meal);
   const {
     title,
     imageUrl,
@@ -16,8 +27,32 @@ const SingleMealScreen = ({ route }) => {
     steps,
   } = meal;
 
+  const isFavorite = favoritesContext.ids.includes(mealId);
+
+  const addOrRemFav = () => {
+    if (isFavorite) {
+      favoritesContext.removeFavorite(mealId);
+    } else {
+      favoritesContext.addFavorite(mealId);
+    }
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            onPress={addOrRemFav}
+            icon={isFavorite ? "star" : "staro"}
+            color="#fff"
+          />
+        );
+      },
+    });
+  }, [navigation, addOrRemFav]);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={{
           uri: imageUrl,
@@ -31,18 +66,22 @@ const SingleMealScreen = ({ route }) => {
         affordability={affordability}
         containerStyle={{ marginTop: 25 }}
       />
-      <View style={styles.stepContainer}>
-      <Text style={styles.subtitle}>Ingredients</Text>
-      {ingredients.map((ingredient) => (
-        <Text key={ingredient}>{ingredient}</Text>
-      ))}
-      <Text style={styles.subtitle}>Steps</Text>
-      {steps.map((step, index) => (
-        <Text key={step}>{`${index + 1}. ${step}`}</Text>
-      ))}
 
+      <Text style={styles.subtitle}>Ingredients</Text>
+      <View style={styles.ingredientContainer}>
+        {ingredients.map((ingredient) => (
+          <Text style={styles.ingredient} key={ingredient}>
+            {ingredient}
+          </Text>
+        ))}
       </View>
-    </View>
+      <View style={styles.stepContainer}>
+        <Text style={styles.subtitle}>Steps</Text>
+        {steps.map((step, index) => (
+          <Text style={styles.steps} key={step}>{`${index + 1}. ${step}`}</Text>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -50,11 +89,32 @@ export default SingleMealScreen;
 
 const styles = StyleSheet.create({
   stepContainer: {
-    padding: 8,
+    marginVertical: 10,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
     marginTop: 15,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  ingredientContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 5,
+  },
+  ingredient: {
+    textAlign: "center",
+    padding: 5,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    fontSize: 16,
+  },
+  steps: {
+    padding: 10,
+    fontSize: 16,
   },
 });

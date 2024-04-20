@@ -1,11 +1,60 @@
-import React from "react";
 import { Pressable, StyleSheet, Text, View, Platform } from "react-native";
+import FaIcon from "react-native-vector-icons/FontAwesome";
+import Fa5Icon from "react-native-vector-icons/FontAwesome5";
+import Fa6Icon from "react-native-vector-icons/FontAwesome6";
+import IoniconIcon from "react-native-vector-icons/Ionicons";
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import BoltIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const CategoryGridTile = ({ categoryTitle, categoryColor, onPress }) => {
+const ICON_LIBRARIES = {
+  pizza: {
+    library: IoniconIcon,
+    name: "pizza-outline",
+  },
+  bolt: {
+    library: BoltIcon,
+    name: "lightning-bolt-outline",
+  },
+  hamburger: {
+    library: Fa5Icon,
+    name: "hamburger",
+  },
+  beer: {
+    library: Fa5Icon,
+    name: "beer",
+  },
+  leaf: {
+    library: EntypoIcon,
+    name: "leaf",
+  },
+  globe: {
+    library: EntypoIcon,
+    name: "globe",
+  },
+  coffee: {
+    library: FeatherIcon,
+    name: "coffee",
+  },
+  rice: {
+    library: Fa6Icon,
+    name: "bowl-rice",
+  },
+  wine: {
+    library: IoniconIcon,
+    name: "wine-outline",
+  },
+  sun: {
+    library: FaIcon,
+    name: "sun-o",
+  },
+};
+
+const CategoryGridTile = ({ categoryTitle, categoryIcon, onPress }) => {
+  const Icon = ICON_LIBRARIES[categoryIcon].library;
+  const iconName = ICON_LIBRARIES[categoryIcon].name;
   return (
-    <View
-      style={[styles.gridItemContainer, { backgroundColor: categoryColor }]}
-    >
+    <View style={styles.gridItemContainer}>
       <Pressable
         style={styles.pressableStyle}
         android_ripple={{
@@ -15,6 +64,7 @@ const CategoryGridTile = ({ categoryTitle, categoryColor, onPress }) => {
         onPress={onPress}
       >
         <View style={styles.innerGridContainer}>
+          <Icon name={iconName} size={45} color="#000" />
           <Text style={styles.title}>{categoryTitle}</Text>
         </View>
       </Pressable>
@@ -51,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight: "300",
   },
 });

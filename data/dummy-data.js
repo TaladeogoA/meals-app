@@ -2,16 +2,16 @@ import Category from "../models/category";
 import Meal from "../models/meal";
 
 export const CATEGORIES = [
-  new Category("c1", "Italian", "#f5428d"),
-  new Category("c2", "Quick & Easy", "#f54242"),
-  new Category("c3", "Hamburgers", "#f5a442"),
-  new Category("c4", "German", "#f5d142"),
-  new Category("c5", "Light & Lovely", "#368dff"),
-  new Category("c6", "Exotic", "#41d95d"),
-  new Category("c7", "Breakfast", "#9eecff"),
-  new Category("c8", "Asian", "#b9ffb0"),
-  new Category("c9", "French", "#ffc7ff"),
-  new Category("c10", "Summer", "#47fced"),
+  new Category("c1", "Italian", "#f5428d", "pizza"), // Icon for Italian food
+  new Category("c2", "Quick & Easy", "#f54242", "bolt"), // Icon for quick and easy meals
+  new Category("c3", "Hamburgers", "#f5a442", "hamburger"), // Icon for hamburgers
+  new Category("c4", "German", "#f5d142", "beer"), // Icon for German food
+  new Category("c5", "Light & Lovely", "#368dff", "leaf"), // Icon for light and lovely meals
+  new Category("c6", "Exotic", "#41d95d", "globe"), // Icon for exotic meals
+  new Category("c7", "Breakfast", "#9eecff", "coffee"), // Icon for breakfast
+  new Category("c8", "Asian", "#b9ffb0", "rice"), // Icon for Asian food
+  new Category("c9", "French", "#ffc7ff", "wine"), // Icon for French food
+  new Category("c10", "Summer", "#47fced", "sun"), // Icon for summer meals
 ];
 
 export const MEALS = [

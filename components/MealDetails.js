@@ -47,7 +47,7 @@ export default MealDetails;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#333",
     marginBottom: 8,
